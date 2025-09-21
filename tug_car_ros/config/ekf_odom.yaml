@@ -1,0 +1,43 @@
+ekf_odom:
+  ros__parameters:
+    # Core
+    frequency: 50.0
+    sensor_timeout: 0.1
+    two_d_mode: true
+    publish_tf: true
+    predict_to_current_time: true
+    print_diagnostics: true
+
+    # Frames (URDF 기준)
+    map_frame: map
+    odom_frame: odom
+    base_link_frame: base_link
+    world_frame: odom   # 2D 보행에서 보통 odom 사용
+
+    # ========== Wheel Odometry (여기 토픽명만 네 로봇에 맞게 바꿔줘!) ==========
+    # 예: /wheel/odom, /odom_wheel, /e100/odom 등
+    odom0: /wheel/odom         # << 실제 휠 오돔 토픽으로 변경
+    odom0_differential: false
+    odom0_relative: false
+    # 측정 사용 여부 [x, y, z, roll, pitch, yaw,  vx,  vy,  vz, vroll, vpitch, vyaw,  ax,  ay,  az]
+    # 디프드라이브 일반값: x, y, yaw, vx, vyaw 사용
+    odom0_config:   [ true, true, false,
+                      false, false, true,
+                      true, false, false,
+                      false, false, true,
+                      false, false, false ]
+
+    # ========== IMU ==========
+    imu0: /imu/data
+    imu0_differential: false
+    imu0_relative: false
+    imu0_remove_gravitational_acceleration: true
+    imu0_queue_size: 20
+    imu0_nodelay: false
+    # IMU는 yaw + yaw rate만 사용(roll/pitch는 무시)
+    imu0_config:    [ false, false, false,
+                      false, false, true,
+                      false, false, false,
+                      false, false, true,
+                      false, false, false ]
+
